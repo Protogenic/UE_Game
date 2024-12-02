@@ -1,0 +1,26 @@
+name: Create Full Project ZIP
+
+on:
+  workflow_dispatch: # Запускается вручную
+
+jobs:
+  create-zip:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Клонируем репозиторий
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          lfs: true  # Загружаем файлы Git LFS
+
+      # 2. Создаем ZIP-архив
+      - name: Create ZIP archive
+        run: zip -r project-full.zip .
+
+      # 3. Загружаем архив как артефакт
+      - name: Upload ZIP as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: project-full
+          path: project-full.zip
